@@ -99,7 +99,8 @@ def main():
     api = TwitterClient()
     # calling function to get tweets
     tweets = api.get_tweets(query='Donald Trump', count=2000)
-
+    # number of tweets
+    # print("Number tweets : {} %".format(tweets.))
     # picking positive tweets from tweets
     ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
     # percentage of positive tweets
@@ -134,21 +135,14 @@ def main():
 
     for tweet in neautraltweets[:1000]:
         print("{}  {}".format(ne, tweet['text']))
-        csv_rowlist.append([ne, 0, tweet['text']])
-        with open('protagonist.csv', 'w') as file:
-            writer = csv.writer(file)
-            writer.writerows(csv_rowlist)
-        ne += 1
+
 
     # printing first 5 negative tweets
     print("\n\nNegative tweets:")
     n = 1
     for tweet in ntweets[:1000]:
         print("{}  {}".format(n, tweet['text']))
-        csv_rowlist.append([n, -1, tweet['text']])
-        with open('protagonist.csv', 'w') as file:
-            writer = csv.writer(file)
-            writer.writerows(csv_rowlist)
+
         n += 1
 
 
