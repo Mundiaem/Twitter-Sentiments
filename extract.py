@@ -99,7 +99,7 @@ def main():
     # number of tweets
     # print("Number tweets : {} %".format(tweets.))
 
-    tweets = api.get_tweets(query='Ann Waiguru', count=1000)
+    tweets = api.get_tweets(query='Building bridges Initiative', count=1000)
 
     # picking positive tweets from tweets
     ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']

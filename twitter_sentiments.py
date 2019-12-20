@@ -31,7 +31,7 @@ train[train['label'] == 0].head(10)
 
 train[train['label'] == 1].head(10)
 
-train['label'].value_counts().plot.bar(color='pink', figsize=(6, 4))
+train['label'].value_counts().plot.bar(color='green', figsize=(6, 4))
 
 # checking the distribution of tweets in the data
 
