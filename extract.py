@@ -6,9 +6,6 @@ from textblob import TextBlob
 from tweepy import OAuthHandler
 
 
-
-
-
 class TwitterClient(object):
     '''
     Generic Twitter Class for sentiment analysis.
@@ -98,9 +95,12 @@ def main():
     # creating object of TwitterClient Class
     api = TwitterClient()
     # calling function to get tweets
-    tweets = api.get_tweets(query='Donald Trump', count=2000)
+
     # number of tweets
     # print("Number tweets : {} %".format(tweets.))
+
+    tweets = api.get_tweets(query='Ann Waiguru', count=1000)
+
     # picking positive tweets from tweets
     ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
     # percentage of positive tweets
@@ -115,20 +115,36 @@ def main():
     # percentage of neutral tweets
     neutral_tweets = (len(tweets) - len(ntweets) - len(ptweets))
     print("Neutral tweets percentage: {} % ".format(100 * neutral_tweets / len(tweets)))
-
-    # printing first 5 positive tweets
-    print("\n\nPositive tweets:")
+    csv_rowlist = [["id", "label", "tweet"]]
     p = 1
-    csv_rowlist =[["id", "label", "tweet"]]
-
-    for tweet in ptweets[:1000]:
-        print("{} {}".format(p, tweet['text']))
-        csv_rowlist.append([p, 1,tweet['text'] ])
+    with open('protagonist.csv', 'w+') as file:
+        file.close()
+    for tweet in ptweets:
+        csv_rowlist.append([p, 1, tweet['text']])
         with open('protagonist.csv', 'w') as file:
             writer = csv.writer(file)
             writer.writerows(csv_rowlist)
+            p += 1
+    for tweet in ntweets:
+        csv_rowlist.append([p, -1, tweet['text']])
+        with open('protagonist.csv', 'w') as file:
+            writer = csv.writer(file)
 
-        p += 1
+            writer.writerows(csv_rowlist)
+            p += 1
+    for tweet in neautraltweets:
+        csv_rowlist.append([p, 0, tweet['text']])
+        with open('protagonist.csv', 'w') as file:
+            writer = csv.writer(file)
+            writer.writerows(csv_rowlist)
+            p += 1
+
+    # printing first 5 positive tweets
+    print("\n\nPositive tweets:")
+
+    for tweet in ptweets[:1000]:
+        print("{} {}".format(p, tweet['text']))
+
     # printing first 5 neutral tweets
     print("\n\nNeutral tweets:")
     ne = 1
